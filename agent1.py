@@ -6,13 +6,13 @@ from tools.calculator_tool import calculator
 from tools.weather_tool import weather
 from tools.search_tool import search
 
-# Initialize model
+
 llm = init_gemini_model()
 
-# Define all tools
+
 tools = [calculator, weather, search]
 
-# Create prompt template for the agent
+
 prompt = ChatPromptTemplate.from_messages([
     ("system", "You are a helpful assistant. Use the tools available to answer the user's question."),
     ("human", "{input}"),
@@ -22,10 +22,9 @@ prompt = ChatPromptTemplate.from_messages([
 
 agent = create_tool_calling_agent(llm, tools, prompt)
 
-# Create agent executor
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 
-# Run the agent
+
 user_input = input("Ask the agent anything: ")
 response = agent_executor.invoke({"input": user_input})
 
